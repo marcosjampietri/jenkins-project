@@ -96,10 +96,10 @@ pipeline {
                     remote.host = "46.101.47.136"
                     remote.allowAnyHosts = true
                     
-                    withCredentials([sshUserPrivateKey(credentialsId: 'ansible_server_key', keyFileVariable: 'KEYFILE', usernameVariable: 'USER')]) {
+                    withCredentials([sshUserPrivateKey(credentialsId: 'ansible_server_key', keyFileVariable: 'AN_KEYFILE', usernameVariable: 'AN_USER')]) {
                         remote.user = USER
                         remote.identityFile = KEYFILE
-                        sshCommand remote: remote, command: "sudo ansible-playbook docker-ec2-playbook.yaml"  
+                        sshCommand remote: remote, command: "ansible-playbook docker-ec2-playbook.yaml"  
                     }                    
                 }
             }
