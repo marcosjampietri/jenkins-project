@@ -61,7 +61,7 @@
     - name: Add user
       user:
         name: ec2-user
-        groups: docker
+        groups: adm,docker
         append: yes
         state: present
     - name: reconect server session
@@ -69,13 +69,17 @@
 
 - name: Start Docker Containers
   hosts: all
+  vars_file:
+    -name: project-vars
+  become: yes
+  become_user: ec2-user
   vars_files:
     - project-vars
   tasks:
     - name: Copy docker compose file from project to server
       copy:
-        src: /Kajabi-Project/docker-compose-prod.yml
-        dest: /home/ec2-user/docker-compose-prod.yml
+        src: /ansible/docker-compose.yaml
+        dest: /home/ec2-user/docker-compose.yaml
     - name: login to Docker
       docker_login:
         registry_url: https://index.docker.io/v1
