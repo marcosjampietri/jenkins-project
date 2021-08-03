@@ -57,16 +57,16 @@ pipeline {
             
             steps {
                 script {
-                   echo 'provisioning server on AWS'
-                   dir('terraform') {
-                       sh "terraform init"
-                       sh "terraform apply \
-                             -var 'my_ip=%MY_IP%' \
-                             -var 'ssh_key_private=%SSH_KEY_SECRET%' \
-                             --auto-approve"
+                    echo 'provisioning server on AWS'
+                    dir('terraform') {
+                        sh "terraform init"
+                        sh "terraform apply \
+                            -var 'my_ip=%MY_IP%' \
+                            -var 'ssh_key_private=%SSH_KEY_SECRET%' \
+                            --auto-approve"
                        EC2_IP = sh(
-                           script: "terraform output ec2_public_ip",
-                           returnStdout: true
+                            script: "terraform output ec2_public_ip",
+                            returnStdout: true
                        ).trim()
                        
                    }

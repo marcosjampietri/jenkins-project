@@ -11,6 +11,7 @@ variable "sub_cidr_block" {
 }
 
 variable "my_ip" {}
+variable "jenkins_ip" {}
 variable "ssh_key_private" {}
 
 resource "aws_vpc" "marcos-vpc-test" {
@@ -69,7 +70,7 @@ resource "aws_security_group" "marcos-sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [var.my_ip, var.jenkins_ip]
   }
 
   ingress {
