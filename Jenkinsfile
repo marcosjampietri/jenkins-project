@@ -6,7 +6,7 @@ pipeline {
         NEW_VERSION = "1.x"
     }
     parameters {
-        booleanParam(name: 'executeTest', defaultValue: true, description: '')
+        booleanParam(name: 'executeTest', defaultValue: false, description: '')
         booleanParam(name: 'executeBuild', defaultValue: false, description: '')
     }
     stages {
@@ -57,8 +57,8 @@ pipeline {
                    dir('terraform') {
                        sh "terraform init"
                        sh "terraform apply \
-                             -var '%my_ip=%MY_IP%' \
-                             -var '%ssh_key_private=%SSH_KEY_SECRET%' \
+                             -var 'my_ip=%MY_IP%' \
+                             -var 'ssh_key_private=%SSH_KEY_SECRET%' \
                              --auto-approve"
                        EC2_IP = sh(
                            script: "terraform output ec2_public_ip",
