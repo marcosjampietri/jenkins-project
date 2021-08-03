@@ -41,7 +41,15 @@ pipeline {
         stage("Ansible Provision") {
             steps {
                 script {
+                    
                     echo "copying ansible folder from mac to server Droplet... don't bother"
+                    
+                    sshagent(['ansible_server_key']) {
+                        sh "scp -o StrictHostKeyChecking=no ansible/* root@46.101.47.136:/root"
+                        withCredentials([sshUserPrivateKey(credentialsId: 'Marcos-ec2-default', keyFileVariable: 'KEYFILE', usernameVariable: 'USER')]) {
+                            sh "scp ${KEYFILE} root@46.101.47.136:/root/Marcos-ec2-default.pem"
+                        }
+                    }
                 }
             }
         }
@@ -61,11 +69,12 @@ pipeline {
                     echo 'provisioning server on AWS'
                     dir('terraform') {
                         sh "terraform init"
-                        sh "terraform apply \
+                        sh(script: "terraform apply \
                             -var 'my_ip=${MY_IP}' \
                             -var 'jenkins_ip=${JEN_IP}' \
                             -var 'ssh_key_private=${SSH_KEY_SECRET}' \
                             --auto-approve"
+                        )
                         EC2_IP = sh(
                             script: "terraform output ec2_public_ip",
                             returnStdout: true
@@ -77,6 +86,11 @@ pipeline {
         }
         
         stage('Deploy and Run') {
+            
+            environment {
+                DOCKER_CRED = credentials('dockerhub-cred')
+            }
+            
             steps {
                 script {
                     sleep(time: 90, unit: "SECONDS")
