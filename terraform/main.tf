@@ -117,10 +117,6 @@ resource "aws_instance" "marcos-server" {
     Name = "marcos-server-tags"
   }
 
-  provisioner "local-exec" {
-    working_dir = "/Users/marcosjampietri/Downloads/Ansible"
-    command     = "ansible-playbook --inventory ${self.public_ip}, --private-key ${var.ssh_key_private} --user ec2-user docker-ec2-playbook.yaml"
-  }
 }
 
 output "ec2_public_ip" {

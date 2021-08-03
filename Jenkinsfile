@@ -42,7 +42,7 @@ pipeline {
             steps {
                 script {
                     
-                    echo "copying ansible folder from mac to server Droplet... don't bother"
+                    echo "copying ansible folder and pem from jenkins to Ansible Droplet... don't bother"
                     
                     sshagent(['ansible_server_key']) {
                         sh "scp -o StrictHostKeyChecking=no ansible/* root@46.101.47.136:/root"
@@ -54,7 +54,7 @@ pipeline {
             }
         }
         
-        stage("Terraform Provision and Ansible Playbook") {
+        stage("Terraform Provision") {
             
             environment {
                 AWS_ACCESS_KEY_ID = credentials('jenkins_aws_access_key_id')
@@ -81,6 +81,26 @@ pipeline {
                         ).trim()
                        
                    }
+                }
+            }
+        }
+        
+        stage("Play Ansible") {
+            
+            steps {
+                script {
+                    echo "run playbook to configure ec2 instances"
+                    
+                    def remote = [:]
+                    remote.name = "ansible-droplet"
+                    remote.host = "46.101.47.136"
+                    remote.allowAnyHosts = true
+                    
+                    withCredentials([sshUserPrivateKey(credentialsId: 'ansible_server_key', keyFileVariable: 'KEYFILE', usernameVariable: 'USER')]) {
+                        remote.user = USER
+                        remote.identityFile = KEYFILE
+                        sshCommand remote: remote, command: "ansible-playbook docker-ec2-playbook.yaml"  
+                    }                    
                 }
             }
         }
