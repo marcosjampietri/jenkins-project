@@ -76,7 +76,7 @@
   tasks:
     - name: Copy docker compose file from project to server
       copy:
-        src: /ansible/docker-compose.yaml
+        src: docker-compose.yaml
         dest: /home/ec2-user/docker-compose.yaml
     - name: login to Docker
       docker_login:
