@@ -42,10 +42,11 @@ pipeline {
             steps {
                 script {
                     
-                    echo "copying ansible folder and pem from jenkins to Ansible Droplet... don't bother"
+                    echo "copying ansible folder, docker-compose and pem from jenkins to Ansible Droplet... don't bother"
                     
                     sshagent(['ansible_server_key']) {
                         sh "scp -o StrictHostKeyChecking=no ansible/* root@46.101.47.136:/root"
+                        sh "scp -o StrictHostKeyChecking=no docker-compose.yaml root@46.101.47.136:/root"
                         withCredentials([sshUserPrivateKey(credentialsId: 'Marcos-ec2-default', keyFileVariable: 'KEYFILE', usernameVariable: 'USER')]) {
                             sh 'scp $KEYFILE root@46.101.47.136:/root/Marcos-ec2-default.pem'
                         }
