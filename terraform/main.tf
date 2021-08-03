@@ -17,6 +17,7 @@ variable "ssh_key_private" {}
 
 resource "aws_vpc" "marcos-vpc-test" {
   cidr_block = "10.0.0.0/16"
+  enable_dns_hostnames = true
   tags = {
     Name = "marchito-vpc"
   }
@@ -103,6 +104,13 @@ data "aws_ami" "latest-amazon-linux-image" {
   }
 }
 
+
+output "ec2_public_ip" {
+  
+  value = aws_instance.marcos-server.public_ip
+  
+}
+
 resource "aws_instance" "marcos-server" {
   ami                         = data.aws_ami.latest-amazon-linux-image.id
   instance_type               = "t2.micro"
@@ -118,10 +126,4 @@ resource "aws_instance" "marcos-server" {
     Name = "marcos-server-tags"
   }
 
-}
-
-output "ec2_public_ip" {
-  
-  value = aws_instance.marcos-server.public_ip
-  
 }

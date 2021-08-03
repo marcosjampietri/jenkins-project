@@ -9,8 +9,8 @@ pipeline {
     }
     
     parameters {
-        booleanParam(name: 'executeTest', defaultValue: false, description: '')
-        booleanParam(name: 'executeBuild', defaultValue: false, description: '')
+        booleanParam(name: 'executeTest', defaultValue: true, description: '')
+        booleanParam(name: 'executeBuild', defaultValue: true, description: '')
     }
     
     stages {
