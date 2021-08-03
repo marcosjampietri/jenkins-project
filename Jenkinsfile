@@ -5,6 +5,10 @@ pipeline {
     environment {
         NEW_VERSION = "1.x"
     }
+    parameters {
+        booleanParam(name: 'executeTest', defaultValue: true, description: '')
+        booleanParam(name: 'executeBuild', defaultValue: false, description: '')
+    }
     stages {
         stage('Test') {
             steps {
