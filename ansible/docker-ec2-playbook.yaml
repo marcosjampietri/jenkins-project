@@ -69,8 +69,6 @@
 
 - name: Start Docker Containers
   hosts: all
-  vars_file:
-    -name: project-vars
   become: yes
   become_user: ec2-user
   vars_files:
