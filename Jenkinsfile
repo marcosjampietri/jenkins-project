@@ -45,12 +45,19 @@ pipeline {
                 }
             }
         }
-        stage('deploy') {
+        stage('Deploy and Run') {
             steps {
                 script {
                    echo 'Deploying all the stuff...'
+                   
+                   def shellCmd = "bash ./three-build.sh ${DOCKER_CRED_URS} ${DOCKER_CRED_PSW}"
+                   
+                   def ec2Instance = "ec2-user@${EC2_IP}"
+                   
                    sshagent(['Marcos-ec2-default']) {
-                       sh "echo 'Ready to use the ec2 instance key'"
+                       sh "scp server-cmds.sh ${ec2Instance}:/home/ec2-user"
+                       sh "scp docker-compose.yaml ${ec2Instance}:/home/ec2-user"
+                       sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} ${shellCmd}"
                    }
                 }
             }
