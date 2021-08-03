@@ -56,10 +56,10 @@ pipeline {
                    echo 'provisioning server on AWS'
                    dir('terraform') {
                        sh "terraform init"
-                       sh([ script: "terraform apply \
-                             -var 'my_ip=${MY_IP}' \
-                             -var 'ssh_key_private=${SSH_KEY_SECRET}' \
-                             --auto-approve"])
+                       sh "terraform apply \
+                             -var '%my_ip=%MY_IP%' \
+                             -var '%ssh_key_private=%SSH_KEY_SECRET%' \
+                             --auto-approve"
                        EC2_IP = sh(
                            script: "terraform output ec2_public_ip",
                            returnStdout: true
