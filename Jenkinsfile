@@ -26,7 +26,7 @@ pipeline {
                   withCredentials([usernamePassword(credentialsId: 'dockerhub-cred', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_ID')]) {
                       sh "docker build -t marcosjampietri/three-docker-repo:1.2 ./client"
                       
-                      sh "echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_ID} --password-stdin"
+                      sh 'echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_ID} --password-stdin'
                       
                       sh "docker push marcosjampietri/three-docker-repo:1.2"
                   }
@@ -56,10 +56,10 @@ pipeline {
                    echo 'provisioning server on AWS'
                    dir('terraform') {
                        sh "terraform init"
-                       sh "terraform apply \
-                         -var 'my_ip=${MY_IP}' \
-                         -var 'ssh_key_private=${SSH_KEY_SECRET}' \
-                         --auto-approve"
+                       sh([ script: "terraform apply \
+                             -var 'my_ip=${MY_IP}' \
+                             -var 'ssh_key_private=${SSH_KEY_SECRET}' \
+                             --auto-approve"])
                        EC2_IP = sh(
                            script: "terraform output ec2_public_ip",
                            returnStdout: true
