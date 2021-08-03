@@ -89,7 +89,7 @@ pipeline {
             
             steps {
                 script {
-                    echo "run playbook to configure ec2 instances"
+                    echo "running playbook to configure ec2 instances.... give me a break"
                     
                     def remote = [:]
                     remote.name = "ansible-droplet"
@@ -99,7 +99,7 @@ pipeline {
                     withCredentials([sshUserPrivateKey(credentialsId: 'ansible_server_key', keyFileVariable: 'KEYFILE', usernameVariable: 'USER')]) {
                         remote.user = USER
                         remote.identityFile = KEYFILE
-                        sshCommand remote: remote, command: "ansible-playbook docker-ec2-playbook.yaml"  
+                        sshCommand remote: remote, command: "sudo ansible-playbook docker-ec2-playbook.yaml"  
                     }                    
                 }
             }
