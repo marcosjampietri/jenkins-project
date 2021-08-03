@@ -2,6 +2,19 @@
 
 /.nova
 
+/terraform/.terraform/*
+/terraform/*.tfstate
+/terraform/*.tfstate.*
+/terraform/*.tfvars
+
+terraform/.terraform/*
+terraform/*.tfstate
+terraform/*.tfstate.*
+terraform/*.tfvars
+terraform/.tfvars
+/terraform/.tfvars
+
+
 # dependencies
 /client/node_modules
 /client/.pnp

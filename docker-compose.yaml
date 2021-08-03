@@ -1,23 +1,23 @@
 version: "3"
 # x-awc-vpc: "vpc-id-string "
 services:
-  nginx:
-    restart: always
-    image: "marcosjampietri/nginx:latest"
-    ports:
-      - "5150:80"
-  api:
-    image: "marcosjampietri/api:latest"
-    volumes:
-      - /app/node_modules
-      - ./server:/app
-    links:
-      - mongo
-    ports:
-      - "5000:5000"
-    environment:
-      DATABASE: "$DATABASE"
-      PORT: "$PORT"
+  # nginx:
+  #   restart: always
+  #   image: "marcosjampietri/nginx:latest"
+  #   ports:
+  #     - "5150:80"
+  # api:
+  #   image: "marcosjampietri/api:latest"
+  #   volumes:
+  #     - /app/node_modules
+  #     - ./server:/app
+  #   links:
+  #     - mongo
+  #   ports:
+  #     - "5000:5000"
+  #   environment:
+  #     DATABASE: "$DATABASE"
+  #     PORT: "$PORT"
   mongo:
     image: "mongo"
     ports:
