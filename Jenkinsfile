@@ -1,14 +1,18 @@
 #!/usr/bin/env groovy
 
 pipeline {
+    
     agent any
+    
     environment {
         NEW_VERSION = "1.x"
     }
+    
     parameters {
         booleanParam(name: 'executeTest', defaultValue: false, description: '')
         booleanParam(name: 'executeBuild', defaultValue: false, description: '')
     }
+    
     stages {
         
         stage('Test') {
