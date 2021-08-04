@@ -1,36 +1,32 @@
-/*
 import { Action } from "redux";
 import { ThunkAction } from "redux-thunk";
-*/
 
-export interface product {
-    _id: string;
-    title: string;
-    description: string;
-    price: number;
-    image: string;
+export interface navType {
+  NavOn: boolean;
+}
+
+export interface loadType {
+  isLoading: boolean;
 }
 
 export interface storeType {
-    products: product[];
-    isLoading: boolean;
+  navType: navType;
+  loadType: loadType;
 }
 
-export interface getProdAction {
-    obj: { type: "GET_PROD"; payload: product[] };
+export interface navActionTP {
+  obj: { type: "TOGGLE_NAV" };
 }
 
-export interface isLodingAction {
-    type: "LOADING";
+export interface isLodingActionTP {
+  type: "LOADED";
 }
 
-export type allActions = getProdAction | isLodingAction;
+export type allActions = navActionTP | isLodingActionTP;
 
-/*
-export type getProdActionCreator<allActions extends Action> = () => ThunkAction<
-      void,
-      storeType,
-      {},
-      allActions
+export type actionCreator<allActions extends Action> = () => ThunkAction<
+  void,
+  storeType,
+  {},
+  allActions
 >;
-*/

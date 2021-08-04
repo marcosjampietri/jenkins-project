@@ -9,7 +9,7 @@ import { animated, useSpring, config } from "react-spring";
 import styles from "../styles/Home.module.css";
 import { AppState } from "./_app";
 
-export default function Home() {
+export default function Outra() {
   const { NavOn } = useSelector((state: AppState) => state.nav);
 
   const textSwipe = useSpring({
@@ -20,9 +20,9 @@ export default function Home() {
 
   return (
     <Page>
-      <div>Rélou Taips quíprit</div>
-      <Link href="/outra">
-        <Text style={textSwipe}>OUTRA</Text>
+      <div>AI AI AI UI UI</div>
+      <Link href="/">
+        <Text style={textSwipe}>HOME</Text>
       </Link>
     </Page>
   );
