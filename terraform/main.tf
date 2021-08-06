@@ -13,10 +13,10 @@ variable "sub_cidr_block" {
 variable "my_ip" {}
 variable "jenkins_ip" {}
 variable "ansible_ip" {}
-variable "ssh_key_private" {}
+
 
 resource "aws_vpc" "marcos-vpc-test" {
-  cidr_block = "10.0.0.0/16"
+  cidr_block           = "10.0.0.0/16"
   enable_dns_hostnames = true
   tags = {
     Name = "marchito-vpc"
@@ -36,7 +36,7 @@ resource "aws_subnet" "marcos-subnet-test" {
 
 data "aws_vpc" "sub-na-vpc-default" {
   default = true
-  
+
 }
 
 
@@ -106,18 +106,18 @@ data "aws_ami" "latest-amazon-linux-image" {
 
 
 output "ec2_public_ip" {
-  
+
   value = aws_instance.marcos-server.public_ip
-  
+
 }
 
 resource "aws_instance" "marcos-server" {
-  ami                         = data.aws_ami.latest-amazon-linux-image.id
-  instance_type               = "t2.micro"
-  subnet_id                   = aws_subnet.marcos-subnet-test.id
-  vpc_security_group_ids      = [aws_security_group.marcos-sg.id]
-  availability_zone           = "eu-west-2a"
-  
+  ami                    = data.aws_ami.latest-amazon-linux-image.id
+  instance_type          = "t2.micro"
+  subnet_id              = aws_subnet.marcos-subnet-test.id
+  vpc_security_group_ids = [aws_security_group.marcos-sg.id]
+  availability_zone      = "eu-west-2a"
+
   associate_public_ip_address = true
   key_name                    = "Marcos-ec2-default"
 
