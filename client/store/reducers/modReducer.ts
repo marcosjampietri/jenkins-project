@@ -1,12 +1,12 @@
-import Video from "../../components/modal/video";
-import Pic from "../../components/modal/pictures";
+// import Video from "../../components/modal/video";
+// import Pic from "../../components/modal/pictures";
 
 const initState = {
   ModOn: false,
   ModComponent: null,
 };
 
-const components = [<Video />, <Pic />];
+const components = ["<Video />", "<Pic />"];
 
 export const modReducer = (state = initState, action: any) => {
   switch (action.type) {
