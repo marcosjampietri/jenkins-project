@@ -28,11 +28,11 @@ pipeline {
                script {
                   echo 'building application..'
                   withCredentials([usernamePassword(credentialsId: 'dockerhub-cred', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_ID')]) {
-                      sh "docker build -t marcosjampietri/three-docker-repo:1.2 ./client"
+                      sh "docker build -t marcosjampietri/three-docker-repo:1.4 ./client"
                       
                       sh 'echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_ID} --password-stdin'
                       
-                      sh "docker push marcosjampietri/three-docker-repo:1.2"
+                      sh "docker push marcosjampietri/three-docker-repo:1.4"
                   }
                }
             }
@@ -45,10 +45,10 @@ pipeline {
                     echo "copying ansible folder, docker-compose and pem from jenkins to Ansible Droplet... don't bother"
                     
                     sshagent(['ansible_server_key']) {
-                        sh "scp -o StrictHostKeyChecking=no ansible/* root@46.101.47.136:/root"
-                        sh "scp -o StrictHostKeyChecking=no docker-compose.yaml root@46.101.47.136:/root"
+                        sh "scp -o StrictHostKeyChecking=no ansible/* root@46.101.36.116:/root"
+                        sh "scp -o StrictHostKeyChecking=no docker-compose.yaml root@46.101.36.116:/root"
                         withCredentials([sshUserPrivateKey(credentialsId: 'Marcos-ec2-default', keyFileVariable: 'KEYFILE', usernameVariable: 'USER')]) {
-                            sh 'scp $KEYFILE root@46.101.47.136:/root/Marcos-ec2-default.pem'
+                            sh 'scp $KEYFILE root@46.101.36.116:/root/Marcos-ec2-default.pem'
                         }
                     }
                 }
@@ -96,7 +96,7 @@ pipeline {
                     
                     def remote = [:]
                     remote.name = "ansible-droplet"
-                    remote.host = "46.101.47.136"
+                    remote.host = "46.101.36.116"
                     remote.allowAnyHosts = true
                     
                     withCredentials([sshUserPrivateKey(credentialsId: 'ansible_server_key', keyFileVariable: 'AN_KEYFILE', usernameVariable: 'AN_USER')]) {
