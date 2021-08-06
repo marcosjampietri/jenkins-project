@@ -10,8 +10,8 @@ import {
   TypedUseSelectorHook,
 } from "react-redux";
 
-import { Transition, animated, config, useSpring } from "react-spring";
-import styled, { css } from "styled-components";
+import { Transition, animated, config } from "react-spring";
+import styled from "styled-components";
 
 import { navAction } from "../store/actions/navActions";
 import rootReducer from "../store/reducers/rootReducer";
