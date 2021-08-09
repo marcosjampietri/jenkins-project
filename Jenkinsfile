@@ -45,10 +45,10 @@ pipeline {
                     echo "copying ansible folder, docker-compose and pem from jenkins to Ansible Droplet... don't bother"
                     
                     sshagent(['ansible_server_key']) {
-                        sh "scp -o StrictHostKeyChecking=no ansible/* root@46.101.36.116:/root"
-                        sh "scp -o StrictHostKeyChecking=no docker-compose.yaml root@46.101.36.116:/root"
+                        sh "scp -o StrictHostKeyChecking=no ansible/* root@142.93.59.204:/root"
+                        sh "scp -o StrictHostKeyChecking=no docker-compose.yaml root@142.93.59.204:/root"
                         withCredentials([sshUserPrivateKey(credentialsId: 'Marcos-ec2-default', keyFileVariable: 'KEYFILE', usernameVariable: 'USER')]) {
-                            sh 'scp $KEYFILE root@46.101.36.116:/root/Marcos-ec2-default.pem'
+                            sh 'scp $KEYFILE root@142.93.59.204:/root/Marcos-ec2-default.pem'
                         }
                     }
                 }
@@ -94,7 +94,7 @@ pipeline {
                     
                     def remote = [:]
                     remote.name = "ansible-droplet"
-                    remote.host = "46.101.36.116"
+                    remote.host = "142.93.59.204"
                     remote.allowAnyHosts = true
                     
                     withCredentials([sshUserPrivateKey(credentialsId: 'ansible_server_key', keyFileVariable: 'AN_KEYFILE', usernameVariable: 'AN_USER')]) {
