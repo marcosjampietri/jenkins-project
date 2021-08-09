@@ -6,11 +6,13 @@ pipeline {
     
     environment {
         NEW_VERSION = "1.x"
+        ANSIBLE_SERVER = "142.93.59.204"
     }
     
     parameters {
         booleanParam(name: 'executeTest', defaultValue: false, description: '')
         booleanParam(name: 'executeBuild', defaultValue: false, description: '')
+        booleanParam(name: 'executeAnsibleProvision', defaultValue: true, description: '')
     }
     
     stages {
@@ -45,10 +47,10 @@ pipeline {
                     echo "copying ansible folder, docker-compose and pem from jenkins to Ansible Droplet... don't bother"
                     
                     sshagent(['ansible_server_key']) {
-                        sh "scp -o StrictHostKeyChecking=no ansible/* root@142.93.59.204:/root"
-                        sh "scp -o StrictHostKeyChecking=no docker-compose.yaml root@142.93.59.204:/root"
+                        sh "scp -o StrictHostKeyChecking=no ansible/* root@${ANSIBLE_SERVER}:/root"
+                        sh "scp -o StrictHostKeyChecking=no docker-compose.yaml root@${ANSIBLE_SERVER}:/root"
                         withCredentials([sshUserPrivateKey(credentialsId: 'Marcos-ec2-default', keyFileVariable: 'KEYFILE', usernameVariable: 'USER')]) {
-                            sh 'scp $KEYFILE root@142.93.59.204:/root/Marcos-ec2-default.pem'
+                            sh 'scp $KEYFILE root@$ANSIBLE_SERVER:/root/Marcos-ec2-default.pem'
                         }
                     }
                 }
@@ -94,7 +96,7 @@ pipeline {
                     
                     def remote = [:]
                     remote.name = "ansible-droplet"
-                    remote.host = "142.93.59.204"
+                    remote.host = env.ANSIBLE_SERVER
                     remote.allowAnyHosts = true
                     
                     withCredentials([sshUserPrivateKey(credentialsId: 'ansible_server_key', keyFileVariable: 'AN_KEYFILE', usernameVariable: 'AN_USER')]) {
@@ -115,9 +117,9 @@ pipeline {
             steps {
                 script {
                     sleep(time: 90, unit: "SECONDS")
-                    echo 'Deploying all the stuff to ${EC2_IP}'
+                    echo 'Deploying all the stuff to $EC2_IP'
                     
-                    def shellCmd = "bash ./three-build.sh ${DOCKER_CRED_URS} ${DOCKER_CRED_PSW}"
+                    def shellCmd = "bash ./three-build.sh ${DOCKER_CRED_USR} ${DOCKER_CRED_PSW}"
                     
                     def ec2Instance = "ec2-user@${EC2_IP}"
                       
