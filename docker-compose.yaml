@@ -1,11 +1,11 @@
 version: "3"
 # x-awc-vpc: "vpc-id-string "
 services:
-  nginx:
-    restart: always
-    image: "marcosjampietri/nginx:latest"
-    ports:
-      - "5150:80"
+  # nginx:
+  #   restart: always
+  #   image: "marcosjampietri/nginx:latest"
+  #   ports:
+  #     - "5150:80"
   # api:
   #   image: "marcosjampietri/api:latest"
   #   volumes:
