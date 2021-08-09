@@ -70,11 +70,11 @@ pipeline {
                     echo 'provisioning server on AWS'
                     dir('terraform') {
                         sh "terraform init"
-                        sh(script: 'terraform apply \
-                            -var \'my_ip=$MY_IP\' \
-                            -var \'jenkins_ip=$JEN_IP\' \
-                            -var \'ansible_ip=$ANS_IP\' \
-                            --auto-approve'
+                        sh(script: "terraform apply \
+                            -var 'my_ip=$MY_IP' \
+                            -var 'jenkins_ip=$JEN_IP' \
+                            -var 'ansible_ip=$ANS_IP' \
+                            --auto-approve"
                         )
                         EC2_IP = sh(
                             script: "terraform output ec2_public_ip",
