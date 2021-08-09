@@ -17,9 +17,9 @@ export default function Home() {
 
   return (
     <Page>
-      <div>Rélou Taips quíprit</div>
+      <div>🤐</div>
       <Link href="/outra">
-        <Text style={textSwipe}>OUTRA</Text>
+        <Text style={textSwipe}>SAY SOMETHING</Text>
       </Link>
     </Page>
   );

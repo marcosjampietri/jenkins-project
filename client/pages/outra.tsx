@@ -17,9 +17,10 @@ export default function Outra() {
 
   return (
     <Page>
-      <div>AI AI AI UI UI</div>
+      <div>🥳</div>
+      <div>IM RUNNING FROM A FULL DEVOPS PROCESS YAYYYY!!!</div>
       <Link href="/">
-        <Text style={textSwipe}>HOME</Text>
+        <Text style={textSwipe}>SHUT UTP!!</Text>
       </Link>
     </Page>
   );
