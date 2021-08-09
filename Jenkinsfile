@@ -97,7 +97,7 @@ pipeline {
                     remote.host = "142.93.59.204"
                     remote.allowAnyHosts = true
                     
-                    withCredentials([sshUserPrivateKey(credentialsId: 'ansible_server_key', keyFileVariable: 'AN_KEYFILE', usernameVariable: 'AN_USER')]) {
+                    withCredentials([sshUserPrivateKey(credentialsId: 'ansible_server_key', keyFileVariable: 'AN_KEYFILE', usernameVariable: 'AN_USER', passphraseVariable: "pass321")]) {
                         remote.user = AN_USER
                         remote.identityFile = AN_KEYFILE
                         sshCommand remote: remote, command: "ansible-playbook docker-ec2-playbook.yaml --extra-vars '@pass.json'"  
