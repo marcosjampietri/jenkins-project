@@ -116,7 +116,7 @@ pipeline {
             
             steps {
                 script {
-                    sleep(time: 90, unit: "SECONDS")
+                    sleep(time: 9, unit: "SECONDS")
                     echo 'Deploying all the stuff to $EC2_IP'
                     
                     def shellCmd = "bash ./three-build.sh ${DOCKER_CRED_USR} ${DOCKER_CRED_PSW}"
