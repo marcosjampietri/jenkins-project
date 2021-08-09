@@ -1,11 +1,11 @@
 version: "3"
 # x-awc-vpc: "vpc-id-string "
 services:
-  # nginx:
-  #   restart: always
-  #   image: "marcosjampietri/nginx:latest"
-  #   ports:
-  #     - "5150:80"
+  nginx:
+    restart: always
+    image: "marcosjampietri/nginx:latest"
+    ports:
+      - "5150:80"
   # api:
   #   image: "marcosjampietri/api:latest"
   #   volumes:
@@ -26,7 +26,7 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=${DATABASE_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${DATABASE_PASSWORD}
   nextjs:
-    image: "marcosjampietri/three-docker-repo:1.2"
+    image: "marcosjampietri/three-docker-repo:1.4"
     volumes:
       - /app/node_modules
       - ./client:/app

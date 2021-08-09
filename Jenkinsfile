@@ -120,11 +120,12 @@ pipeline {
                     sleep(time: 9, unit: "SECONDS")
                     echo 'Deploying all the stuff to $EC2_IP'
                     
-                    def shellCmd = "bash ./three-build.sh ${DOCKER_CRED_USR} ${DOCKER_CRED_PSW}"
+                    def shellCmd = 'bash ./three-build.sh $DOCKER_CRED_USR $DOCKER_CRED_PSW'
                     
                     def ec2Instance = "ec2-user@${EC2_IP}"
                       
                     sshagent(['Marcos-ec2-default']) {
+                       sh "scp -o StrictHostKeyChecking=no three-build.sh ${ec2Instance}:/home/ec2-user"
                        sh "scp -o StrictHostKeyChecking=no docker-compose.yaml ${ec2Instance}:/home/ec2-user"
                        sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} ${shellCmd}"
                    }
