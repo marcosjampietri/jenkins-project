@@ -18,19 +18,16 @@ services:
   #   environment:
   #     DATABASE: "$DATABASE"
   #     PORT: "$PORT"
-  mongo:
-    image: "mongo"
-    ports:
-      - "27017:27017"
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=${DATABASE_USERNAME}
-      - MONGO_INITDB_ROOT_PASSWORD=${DATABASE_PASSWORD}
+  # mongo:
+  #   image: "mongo"
+  #   ports:
+  #     - "27017:27017"
+  #   environment:
+  #     - MONGO_INITDB_ROOT_USERNAME=${DATABASE_USERNAME}
+  #     - MONGO_INITDB_ROOT_PASSWORD=${DATABASE_PASSWORD}
   nextjs:
     image: "marcosjampietri/three-docker-repo:1.4"
-    volumes:
-      - /app/node_modules
-      - ./client:/app
-    links:
-      - mongo
+    # links:
+    #   - mongo
     ports:
       - "3000:3000"
