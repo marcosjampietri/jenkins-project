@@ -26,7 +26,7 @@ services:
   #     - MONGO_INITDB_ROOT_USERNAME=${DATABASE_USERNAME}
   #     - MONGO_INITDB_ROOT_PASSWORD=${DATABASE_PASSWORD}
   nextjs:
-    image: "marcosjampietri/three-docker-repo:1.5"
+    image: "marcosjampietri/three-docker-repo:1.0"
     # links:
     #   - mongo
     ports:
