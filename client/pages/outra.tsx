@@ -20,7 +20,7 @@ export default function Outra() {
       <div>🥳</div>
       <div>IM RUNNING FROM A FULL DEVOPS PROCESS YAYYYY!!!</div>
       <Link href="/">
-        <Text style={textSwipe}>SHUT UTP!!</Text>
+        <Text style={textSwipe}>SHUT UP!!</Text>
       </Link>
     </Page>
   );
