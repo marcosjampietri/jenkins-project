@@ -74,16 +74,16 @@
   vars_files:
     - project-vars
   tasks:
-    - name: Copy docker compose file from project to server
-      copy:
-        src: docker-compose.yaml
-        dest: /home/ec2-user/docker-compose.yaml
+    # - name: Copy docker compose file from project to server
+    #   copy:
+    #     src: docker-compose.yaml
+    #     dest: /home/ec2-user/docker-compose.yaml
     - name: login to Docker
       docker_login:
         registry_url: https://index.docker.io/v1
         username: marcosjampietri
         password: "{{docker_password}}"
-    - name: compose
-      docker_compose:
-        project_src: /home/ec2-user
-        state: present
+    # - name: compose
+    #   docker_compose:
+    #     project_src: /home/ec2-user
+    #     state: present
