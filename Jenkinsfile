@@ -92,6 +92,7 @@ pipeline {
             
             steps {
                 script {
+                    sleep(time: 9, unit: "SECONDS")
                     echo "running playbook to configure ec2 instances.... give me a break"
                     
                     def remote = [:]
@@ -124,7 +125,6 @@ pipeline {
                     def ec2Instance = "ec2-user@${EC2_IP}"
                       
                     sshagent(['Marcos-ec2-default']) {
-                       sh "scp -o StrictHostKeyChecking=no server-cmds.sh ${ec2Instance}:/home/ec2-user"
                        sh "scp -o StrictHostKeyChecking=no docker-compose.yaml ${ec2Instance}:/home/ec2-user"
                        sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} ${shellCmd}"
                    }
