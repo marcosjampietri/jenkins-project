@@ -33,4 +33,4 @@ services:
     links:
       - mongo
     ports:
-      - "5150:3000"
+      - "3000:3000"
