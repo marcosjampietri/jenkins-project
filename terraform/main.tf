@@ -34,10 +34,10 @@ resource "aws_subnet" "marcos-subnet-test" {
 
 }
 
-data "aws_vpc" "sub-na-vpc-default" {
-  default = true
-
-}
+# data "aws_vpc" "sub-na-vpc-default" {
+#   default = true
+# 
+# }
 
 
 resource "aws_route_table" "marcos-table" {

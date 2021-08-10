@@ -42,8 +42,7 @@ pipeline {
         
         stage("Ansible Provision") {
             steps {
-                script {
-                    
+                script {                
                     echo "copying ansible folder, docker-compose and pem from jenkins to Ansible Droplet... don't bother"
                     
                     sshagent(['ansible_server_key']) {
@@ -70,6 +69,7 @@ pipeline {
             steps {
                 script {
                     echo 'provisioning server on AWS'
+                    
                     dir('terraform') {
                         sh "terraform init"
                         sh(script: "terraform apply \
@@ -92,7 +92,8 @@ pipeline {
             
             steps {
                 script {
-                    sleep(time: 9, unit: "SECONDS")
+                    sleep(time: 90, unit: "SECONDS")
+                    
                     echo "running playbook to configure ec2 instances.... give me a break"
                     
                     def remote = [:]
@@ -117,7 +118,8 @@ pipeline {
             
             steps {
                 script {
-                    sleep(time: 9, unit: "SECONDS")
+                    sleep(time: 90, unit: "SECONDS")
+                    
                     echo 'Deploying all the stuff to EC2...'
                     echo "${EC2_IP}"
                     
