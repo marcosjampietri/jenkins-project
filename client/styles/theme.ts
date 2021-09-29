@@ -1,16 +1,16 @@
-export type ThemeType = typeof light; // This is the type definition for my theme object.
+export type ThemeType = typeof dark; // This is the type definition for my theme object.
 
-export const light = {
-  primary: "#f45511",
-  text: "#000",
-  background: "#fff",
+export const dark = {
+    primary: "#f45511",
+    text: "#000",
+    background: "#fff",
 };
 
-export const dark: ThemeType = {
-  primary: "#f45581",
-  text: "#000",
-  background: "#fff",
+export const light: ThemeType = {
+    primary: "#f45581",
+    text: "#000",
+    background: "#fff",
 };
 
-const theme = light; // set the light theme as the default.
+const theme = dark; // set the dark theme as the default.
 export default theme;

@@ -31,10 +31,14 @@ pipeline {
                   echo 'building application..'
                   withCredentials([usernamePassword(credentialsId: 'dockerhub-cred', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_ID')]) {
                       sh "docker build -t marcosjampietri/three-docker-repo:latest ./client"
+                      sh "docker build -t marcosjampietri/api:latest ./server"
+                      sh "docker build -t marcosjampietri/nginx:latest ./nginx"
                       
                       sh 'echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_ID} --password-stdin'
                       
                       sh "docker push marcosjampietri/three-docker-repo:latest"
+                      sh "docker push marcosjampietri/api:latest"
+                      sh "docker push marcosjampietri/nginx:latest"
                   }
                }
             }

@@ -7,7 +7,12 @@ services:
     ports:
       - "5150:80"
   api:
-    image: "marcosjampietri/api:latest"
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./server
+    volumes:
+      - /app/node_modules
+      - ./server:/app
     links:
       - mongo
     ports:
