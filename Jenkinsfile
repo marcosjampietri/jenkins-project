@@ -118,6 +118,7 @@ pipeline {
             
             environment {
                 DOCKER_CRED = credentials('dockerhub-cred')
+                MONGO_STRING = credentials('mongo-string-cred')
             }
             
             steps {
@@ -127,7 +128,7 @@ pipeline {
                     echo 'Deploying all the stuff to EC2...'
                     echo "${EC2_IP}"
                     
-                    def shellCmd = 'bash ./three-build.sh $DOCKER_CRED_USR $DOCKER_CRED_PSW'
+                    def shellCmd = 'bash ./three-build.sh $DOCKER_CRED_USR $DOCKER_CRED_PSW $MONGO_STRING'
                     
                     def ec2Instance = "ec2-user@${EC2_IP}"
                       
