@@ -96,7 +96,7 @@ pipeline {
             
             steps {
                 script {
-                    sleep(time: 90, unit: "SECONDS")
+                    sleep(time: 10, unit: "SECONDS")
                     
                     echo "running playbook to configure ec2 instances.... give me a break"
                     
@@ -123,7 +123,7 @@ pipeline {
             
             steps {
                 script {
-                    sleep(time: 90, unit: "SECONDS")
+                    sleep(time: 10, unit: "SECONDS")
                     
                     echo 'Deploying all the stuff to EC2...'
                     echo "${EC2_IP}"

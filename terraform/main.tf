@@ -144,7 +144,7 @@ resource "aws_instance" "marcos-server" {
 
 
   tags = {
-    Name = "marcos-server-tags"
+    Name = "e-commerce"
   }
 
 }
