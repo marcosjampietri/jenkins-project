@@ -135,7 +135,7 @@ pipeline {
                        sh "scp -o StrictHostKeyChecking=no three-build.sh ${ec2Instance}:/home/ec2-user"
                        sh "scp -o StrictHostKeyChecking=no docker-compose.yaml ${ec2Instance}:/home/ec2-user"
                        withCredentials([file(credentialsId: 'compose-vars', variable: 'ENV_FILE')]) {
-                            sh 'scp -o StrictHostKeyChecking=no $ENV_FILE ${ec2Instance}:/home/ec2-user/.env.prod'
+                            sh 'scp -o StrictHostKeyChecking=no $ENV_FILE ${ec2Instance}:/home/ec2-user'
                            }
                        sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} ${shellCmd}"
                    }
