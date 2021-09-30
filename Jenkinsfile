@@ -5,7 +5,7 @@ pipeline {
     agent any
     
     environment {
-        NEW_VERSION = "0.1"
+        VERSION = "0.1"
         ANSIBLE_SERVER = "142.93.59.204"
     }
     
@@ -30,15 +30,15 @@ pipeline {
                script {
                   echo 'building application..'
                   withCredentials([usernamePassword(credentialsId: 'dockerhub-cred', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_ID')]) {
-                      sh "docker build -t marcosjampietri/three-docker-repo:${NEW_VERSION} ./client"
-                      sh "docker build -t marcosjampietri/api:${NEW_VERSION} ./server"
-                      sh "docker build -t marcosjampietri/nginx:${NEW_VERSION} ./nginx"
+                      sh "docker build -t marcosjampietri/three-docker-repo:${VERSION} ./client"
+                      sh "docker build -t marcosjampietri/api:${VERSION} ./server"
+                      sh "docker build -t marcosjampietri/nginx:${VERSION} ./nginx"
                       
                       sh 'echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_ID} --password-stdin'
                       
-                      sh "docker push marcosjampietri/three-docker-repo:${NEW_VERSION}"
-                      sh "docker push marcosjampietri/api:${NEW_VERSION}"
-                      sh "docker push marcosjampietri/nginx:${NEW_VERSION}"
+                      sh "docker push marcosjampietri/three-docker-repo:${VERSION}"
+                      sh "docker push marcosjampietri/api:${VERSION}"
+                      sh "docker push marcosjampietri/nginx:${VERSION}"
                   }
                }
             }
@@ -125,6 +125,7 @@ pipeline {
                     sleep(time: 10, unit: "SECONDS")
                     
                     echo 'Deploying all the stuff to EC2...'
+                    
                     echo "${EC2_IP}"
                     
                     def shellCmd = 'bash ./three-build.sh $DOCKER_CRED_USR $DOCKER_CRED_PSW'
