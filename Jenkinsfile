@@ -118,7 +118,6 @@ pipeline {
             
             environment {
                 DOCKER_CRED = credentials('dockerhub-cred')
-                MONGO_STRING = credentials('mongo-string-cred')
             }
             
             steps {
