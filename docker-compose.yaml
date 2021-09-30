@@ -3,11 +3,11 @@ version: "3"
 services:
   nginx:
     restart: always
-    image: "marcosjampietri/nginx:latest"
+    image: "marcosjampietri/nginx:0.1"
     ports:
       - "5150:80"
   api:
-    image: "marcosjampietri/api:latest"
+    image: "marcosjampietri/api:0.1"
     links:
       - mongo
     ports:
@@ -23,7 +23,7 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=${DATABASE_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${DATABASE_PASSWORD}
   nextjs:
-    image: "marcosjampietri/three-docker-repo:latest"
+    image: "marcosjampietri/three-docker-repo:0.1"
     links:
       - mongo
     ports:

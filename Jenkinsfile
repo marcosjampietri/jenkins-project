@@ -5,7 +5,7 @@ pipeline {
     agent any
     
     environment {
-        NEW_VERSION = "1.x"
+        NEW_VERSION = "0.1"
         ANSIBLE_SERVER = "142.93.59.204"
     }
     
@@ -30,15 +30,15 @@ pipeline {
                script {
                   echo 'building application..'
                   withCredentials([usernamePassword(credentialsId: 'dockerhub-cred', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_ID')]) {
-                      sh "docker build -t marcosjampietri/three-docker-repo:latest ./client"
-                      sh "docker build -t marcosjampietri/api:latest ./server"
-                      sh "docker build -t marcosjampietri/nginx:latest ./nginx"
+                      sh "docker build -t marcosjampietri/three-docker-repo:${NEW_VERSION} ./client"
+                      sh "docker build -t marcosjampietri/api:${NEW_VERSION} ./server"
+                      sh "docker build -t marcosjampietri/nginx:${NEW_VERSION} ./nginx"
                       
                       sh 'echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_ID} --password-stdin'
                       
-                      sh "docker push marcosjampietri/three-docker-repo:latest"
-                      sh "docker push marcosjampietri/api:latest"
-                      sh "docker push marcosjampietri/nginx:latest"
+                      sh "docker push marcosjampietri/three-docker-repo:${NEW_VERSION}"
+                      sh "docker push marcosjampietri/api:${NEW_VERSION}"
+                      sh "docker push marcosjampietri/nginx:${NEW_VERSION}"
                   }
                }
             }
@@ -128,13 +128,16 @@ pipeline {
                     echo 'Deploying all the stuff to EC2...'
                     echo "${EC2_IP}"
                     
-                    def shellCmd = 'bash ./three-build.sh $DOCKER_CRED_USR $DOCKER_CRED_PSW $MONGO_STRING'
+                    def shellCmd = 'bash ./three-build.sh $DOCKER_CRED_USR $DOCKER_CRED_PSW'
                     
                     def ec2Instance = "ec2-user@${EC2_IP}"
                       
                     sshagent(['Marcos-ec2-default']) {
                        sh "scp -o StrictHostKeyChecking=no three-build.sh ${ec2Instance}:/home/ec2-user"
                        sh "scp -o StrictHostKeyChecking=no docker-compose.yaml ${ec2Instance}:/home/ec2-user"
+                       withCredentials([file(credentialsId: 'compose-vars', variable: 'ENV_FILE')]) {
+                            sh 'scp -o StrictHostKeyChecking=no $ENV_FILE ${ec2Instance}:/home/ec2-user/.env.prod'
+                           }
                        sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} ${shellCmd}"
                    }
                 }
